@@ -1,0 +1,13 @@
+<mat-toolbar class="navbar" color="accent">
+  <a class="navbar-title" routerLink="/">Shipkart</a>
+  <div>
+    <a
+      routerLinkActive="navbar-link-active"
+      *ngFor="let link of links"
+      [routerLink]="link.toLowerCase()"
+      class="navbar-link"
+      >{{ link }}</a
+    >
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>
