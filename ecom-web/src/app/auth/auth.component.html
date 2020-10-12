@@ -1,27 +1,56 @@
 <div class="auth-form-container">
-  <form class="auth-form" (ngSubmit)="onAuthSubmit()" #authForm>
+  <form class="auth-form" (ngSubmit)="onAuthSubmit()" #authForm="ngForm">
     <p class="auth-form-title">
       {{ isLoginMode ? "Login Now." : "Sign Up to shop." }}
     </p>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input name="email" ngModel matInput type="email" />
+      <input class="auth-form-input" name="email" ngModel matInput type="email" email />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input name="password" ngModel matInput type="password" />
+      <input class="auth-form-input" name="password" ngModel matInput type="password" minlength="6" />
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="!isLoginMode">
       <mat-label>Confirm Password</mat-label>
-      <input name="confirmPassword" ngModel matInput type="password" />
+      <input
+        class="auth-form-input"
+        name="confirmPassword"
+        ngModel
+        matInput
+        type="password"
+        minlength="6"
+      />
     </mat-form-field>
     <div class="auth-form-buttons">
-      <button color="accent" mat-raised-button>
+      <button
+        *ngIf="!isLoading"
+        [disabled]="authFormError || !authForm.touched"
+        type="submit"
+        color="accent"
+        mat-raised-button
+      >
         {{ isLoginMode ? "Login" : "Sign Up" }}
       </button>
-      <button color="accent" (click)="switchAuthMode()" mat-raised-button>
+      <mat-spinner
+        class="mb-15 auth-form-spinner"
+        diameter="30"
+        *ngIf="isLoading"
+      ></mat-spinner>
+      <button
+        type="button"
+        color="accent"
+        (click)="switchAuthMode()"
+        mat-raised-button
+      >
         {{ isLoginMode ? "Sign Up" : "Login" }}
       </button>
     </div>
+    <mat-error class="auth-form-error" *ngIf="authFormError">
+      {{ authFormError }}
+    </mat-error>
+    <mat-error class="auth-form-error" *ngIf="error">
+      {{ error }}
+    </mat-error>
   </form>
 </div>

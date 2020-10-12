@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   firebase: {
-    name: '',
-    apiKey: ''
+    name: 'angular-demo-ecom-web',
+    apiKey: 'AIzaSyDrnMJXT4RkYCFw09Wz5UkLZD_wndbs9a0'
   }
 };
 

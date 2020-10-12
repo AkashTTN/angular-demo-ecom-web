@@ -8,6 +8,13 @@
       class="navbar-link"
       >{{ link }}</a
     >
+    <a
+      *ngIf="isAuthenticated"
+      routerLinkActive="navbar-link-active"
+      class="navbar-link"
+      (click)="onLogout()"
+      >Logout</a
+    >
   </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
