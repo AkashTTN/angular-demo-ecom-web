@@ -1,3 +1,18 @@
-<mat-form-field>
-  <input matInput type="text" />
-</mat-form-field>
+<div class="container">
+  <div class="cart">
+    <div class="card-header">
+      <p>Items</p>
+      <p *ngIf="cartItems.length < 1">No items added to cart.</p>
+    </div>
+    <ng-container *ngIf="cartItems.length > 0">
+      <app-cart-item
+        *ngFor="let cartItem of cartItems"
+        [cartItem]="cartItem"
+      ></app-cart-item>
+      <p class="cart-total">Subtotal: INR {{ cartTotal }}</p>
+      <button (click)="onCheckout()" class="cart-checkout" mat-raised-button>
+        Checkout
+      </button>
+    </ng-container>
+  </div>
+</div>

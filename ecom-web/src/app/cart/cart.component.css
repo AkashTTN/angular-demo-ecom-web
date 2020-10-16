@@ -1,0 +1,31 @@
+.cart {
+    padding: 20px;
+    width: 100%;
+    margin: 0 70px;
+}
+
+.cart-total {
+    font-weight: bold;
+}
+
+.card-header > p:first-child {
+    font-weight: bold;
+}
+
+.card-header > p {
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-header {
+    text-align: center;
+}
+
+.cart-checkout {
+    margin-top: 20px;
+}

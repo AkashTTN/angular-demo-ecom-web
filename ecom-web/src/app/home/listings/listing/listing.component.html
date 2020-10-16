@@ -1,0 +1,27 @@
+<div class="listing">
+  <p class="listing-title" (click)="goToProductPage(listingData.id)">
+    {{ listingData.title }}
+  </p>
+  <p class="listing-data">{{ listingData.data }}</p>
+  <div class="listing-buttons">
+    <button
+      mat-raised-button
+      (click)="onAddToCart(listingData.id)"
+      [matBadge]="listingData.quantityInCart"
+      [matBadgeHidden]="listingData.quantityInCart < 1 || !isAuthenticated"
+      name="addToCart"
+      matBadgeColor="accent"
+      type="button"
+    >
+      Add
+    </button>
+    <button
+      mat-raised-button
+      (click)="onRemoveFromCart(listingData.id)"
+      name="removeFromCart"
+      type="button"
+    >
+      Remove
+    </button>
+  </div>
+</div>

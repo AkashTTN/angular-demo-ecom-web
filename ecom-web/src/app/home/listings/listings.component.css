@@ -1,0 +1,10 @@
+.listings {
+    margin: 20px;
+    padding: 50px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.listings > h1 {
+    font-weight: bold;
+}

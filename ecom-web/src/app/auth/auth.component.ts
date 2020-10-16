@@ -53,7 +53,6 @@ export class AuthComponent implements OnDestroy, OnInit, AfterViewInit {
       this.authServiceObs = this.authService.singin({ email, password });
     } else {
       if (password === confirmPassword) {
-        console.log(password, confirmPassword)
         this.authServiceObs = this.authService.signup({ email, password });
       } else {
         this.error = 'Passwords don\'t match.';
