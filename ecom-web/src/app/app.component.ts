@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AuthService } from './auth/auth.service';
-import { ListingsService } from './listings.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,12 @@ export class AppComponent {
 
   links = ['Cart', 'Authenticate'];
   isAuthenticated = false;
-  listingsInCart: Array<string>;
+  listingsInCart;
+  storeSubs: Subscription;
 
   constructor(
     private authService: AuthService,
-    private listingsService: ListingsService
+    private store: Store<{ shop: { listings: {}, cartTotal: number } }>
   ) { }
 
   ngOnInit(): void {
@@ -30,8 +32,8 @@ export class AppComponent {
       }
     });
 
-    this.listingsService.listingsInCart.subscribe((listingsInCart) => {
-      this.listingsInCart = listingsInCart;
+    this.storeSubs = this.store.select('shop').subscribe((storeData) => {
+      this.listingsInCart = Object.values(storeData.listings).filter((listing) => listing['quantityInCart'] > 0);
     });
   }
 

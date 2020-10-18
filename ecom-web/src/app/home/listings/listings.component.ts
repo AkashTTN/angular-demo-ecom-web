@@ -1,19 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { ListingsService } from 'src/app/listings.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listings',
   templateUrl: './listings.component.html',
   styleUrls: ['./listings.component.css']
 })
-export class ListingsComponent implements OnInit {
+export class ListingsComponent implements OnInit, OnDestroy {
 
   listings;
+  listingsSubs: Subscription;
 
-  constructor(private listingsService: ListingsService) { }
+  constructor(
+    private store: Store<{ shop: { listings: {}, cartTotal: number } }>
+  ) { }
 
   ngOnInit(): void {
-    this.listings = this.listingsService.getListings();
+    this.listingsSubs = this.store.select('shop').subscribe((storeState) => {
+      this.listings = Object.values(storeState.listings);
+    });
+  }
+
+  ngOnDestroy() {
+    this.listingsSubs.unsubscribe();
   }
 
 }

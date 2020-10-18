@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ListingData, ListingsService } from 'src/app/listings.service';
+import { Store } from '@ngrx/store';
+import { Product } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-listing-details',
@@ -12,20 +13,26 @@ export class ListingDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private listingsService: ListingsService) {
+    private store: Store<{ shop: { listings: {}, cartTotal: number } }>
+  ) {
   }
 
   id: string;
-  listingData;
+  listingData: Product;
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = params.id;
     });
-    this.listingData = this.listingsService.getListingById(this.id)[0];
-    if (!this.listingData) {
-      this.router.navigate(['/not-found']);
-    }
+
+    this.store.select('shop').subscribe((storeData) => {
+      if (this.id in storeData.listings) {
+        this.listingData = storeData.listings[this.id];
+      } else {
+        this.router.navigate(['/not-found']);
+      }
+    });
+
   }
 
 }

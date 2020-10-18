@@ -2,12 +2,12 @@
   <div class="cart">
     <div class="card-header">
       <p>Items</p>
-      <p *ngIf="cartItems.length < 1">No items added to cart.</p>
+      <p *ngIf="listingsInCart.length < 1">No items added to cart.</p>
     </div>
-    <ng-container *ngIf="cartItems.length > 0">
+    <ng-container *ngIf="listingsInCart.length > 0">
       <app-cart-item
-        *ngFor="let cartItem of cartItems"
-        [cartItem]="cartItem"
+        *ngFor="let listing of listingsInCart"
+        [cartItem]="listing"
       ></app-cart-item>
       <p class="cart-total">Subtotal: INR {{ cartTotal }}</p>
       <button (click)="onCheckout()" class="cart-checkout" mat-raised-button>

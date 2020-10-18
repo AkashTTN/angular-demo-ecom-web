@@ -1,9 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
-import { ListingData, ListingsService } from 'src/app/listings.service';
+import { ListingData } from 'src/app/listings.service';
+import * as Actions from '../../../store/actions';
 
 @Component({
   selector: 'app-listing',
@@ -18,8 +20,8 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private listingsService: ListingsService,
     private router: Router,
+    private store: Store<{ shop: { listings: {}, cartTotal: number } }>
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +43,8 @@ export class ListingComponent implements OnInit, OnDestroy {
       return this.router.navigate(['/authenticate']);
     }
 
-    this.listingsService.addToCart({ id: listingId });
+    // this.listingsService.addToCart({ id: listingId });
+    this.store.dispatch(new Actions.AddToCart({ listingId }));
   }
 
   onRemoveFromCart(listingId) {
@@ -49,7 +52,8 @@ export class ListingComponent implements OnInit, OnDestroy {
       return this.router.navigate(['/authenticate']);
     }
 
-    this.listingsService.removeFromCart({ id: listingId });
+    // this.listingsService.removeFromCart({ id: listingId });
+    this.store.dispatch(new Actions.RemoveFromCart({ listingId }));
   }
 
 }

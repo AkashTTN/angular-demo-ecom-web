@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
 
-import { ListingData, ListingsService } from '../listings.service';
+import { Product, Checkout } from '../store/actions';
 
 @Component({
   selector: 'app-cart',
@@ -9,21 +11,26 @@ import { ListingData, ListingsService } from '../listings.service';
 })
 export class CartComponent implements OnInit {
 
-  constructor(private listingsService: ListingsService) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private store: Store<{ shop: { listings: { string: Product }, cartTotal: number } }>
+  ) { }
 
-  listingsInCart: string[];
-  cartItems: ListingData[];
+  listingsInCart: Product[];
   cartTotal: number;
 
   ngOnInit(): void {
-    this.listingsService.listingsInCart.subscribe((idsList) => {
-      this.cartItems = this.listingsService.getListingById(idsList);
-      this.cartTotal = this.listingsService.getCartTotal();
+
+    this.store.select('shop').subscribe((storeData) => {
+      this.cartTotal = storeData.cartTotal;
+      this.listingsInCart = Object.values(storeData.listings).filter((listing) => +listing['quantityInCart'] > 0)
     });
+
   }
 
   onCheckout() {
-    this.listingsService.checkout();
+    this.store.dispatch(new Checkout());
+    this._snackBar.open('Checkout Success', 'Close');
   }
 
 }
