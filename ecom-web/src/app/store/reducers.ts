@@ -23,7 +23,7 @@ export function ShopReducer(state = initialState, action: ActionsUnion) {
             };
             let updatedCartTotal = 0;
             for (const listingId in state.listings) {
-                updatedCartTotal += state.listings[listingId].quantityInCart * state.listings[listingId].price;
+                updatedCartTotal += updatedListings[listingId].quantityInCart * updatedListings[listingId].price;
             }
 
             return {
@@ -43,7 +43,7 @@ export function ShopReducer(state = initialState, action: ActionsUnion) {
 
             let newCartTotal = 0;
             for (const listingId in state.listings) {
-                newCartTotal += state.listings[listingId].quantityInCart * state.listings[listingId].price;
+                newCartTotal += newListings[listingId].quantityInCart * newListings[listingId].price;
             }
 
             return {
