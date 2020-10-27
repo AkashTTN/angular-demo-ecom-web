@@ -1,18 +1,50 @@
-import { ActionsUnion, ActionTypes } from './actions';
+import { ActionsUnion, ActionTypes, Product } from './actions';
 
-export const initialState = {
-    listings: {
-        1: { id: '1', price: '20', title: 'Listing One', data: 'Listing Data', quantityInCart: 0 },
-        2: { id: '2', price: '30', title: 'Listing Two', data: 'Listing Data', quantityInCart: 0 },
-        3: { id: '3', price: '40', title: 'Listing Three', data: 'Listing Data', quantityInCart: 0 },
-        4: { id: '4', price: '50', title: 'Listing Four', data: 'Listing Data', quantityInCart: 0 },
-        5: { id: '5', price: '60', title: 'Listing Five', data: 'Listing Data', quantityInCart: 0 },
-    },
-    cartTotal: 0
+export interface AppState {
+    listings: Object;
+    cartTotal: number;
+    error: any;
+    loading: boolean;
+}
+
+export const initialState: AppState = {
+    listings: {},
+    cartTotal: 0,
+    error: null,
+    loading: false,
 };
 
 export function ShopReducer(state = initialState, action: ActionsUnion) {
     switch (action.type) {
+        case ActionTypes.LoadListings:
+            return {
+                ...state,
+                error: null,
+                loading: true
+            }
+
+        case ActionTypes.LoadListingsSuccess:
+
+            let listings = {}
+
+            action.payload.listings.forEach(listing => {
+                listings[listing.id] = listing
+            });
+
+            return {
+                ...state,
+                listings,
+                loading: false,
+            };
+
+        case ActionTypes.LoadListingsFail:
+
+            return {
+                ...state,
+                error: action.payload.error,
+                loading: false
+            };
+
         case ActionTypes.Add:
             const updatedListings = {
                 ...state.listings,

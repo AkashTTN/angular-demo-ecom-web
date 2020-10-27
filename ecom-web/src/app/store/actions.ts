@@ -2,16 +2,35 @@ import { Action } from '@ngrx/store';
 
 export interface Product {
     title: string;
-    price: number;
+    price: string;
     data: string;
     id: string;
-    quantityInCart: string;
+    quantityInCart: number;
 }
 
 export enum ActionTypes {
-    Add = '[Product] Add to cart',
-    Remove = '[Product] Remove from cart',
-    Checkout = '[Product] Checkout',
+    Add = '[Shop] Add to cart',
+    Remove = '[Shop] Remove from cart',
+    Checkout = '[Shop] Checkout',
+    LoadListings = '[Shop] Get Listings',
+    LoadListingsSuccess = '[Shop] Get Listings Success',
+    LoadListingsFail = '[Shop] Get Listings Fail',
+}
+
+export class LoadListings implements Action {
+    readonly type = ActionTypes.LoadListings;
+}
+
+export class LoadListingsSuccess implements Action {
+    readonly type = ActionTypes.LoadListingsSuccess;
+
+    constructor(public payload: { listings }) { }
+}
+
+export class LoadListingsFail implements Action {
+    readonly type = ActionTypes.LoadListingsFail;
+
+    constructor(public payload: { error }) { }
 }
 
 export class Checkout implements Action {
@@ -30,4 +49,4 @@ export class RemoveFromCart implements Action {
     constructor(public payload: { listingId: string }) { }
 }
 
-export type ActionsUnion = AddToCart | RemoveFromCart | Checkout;
+export type ActionsUnion = AddToCart | RemoveFromCart | Checkout | LoadListings | LoadListingsSuccess | LoadListingsFail;

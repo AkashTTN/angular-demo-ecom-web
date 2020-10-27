@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import * as fromApp from './store/reducers';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 
@@ -17,7 +18,7 @@ export class AppComponent {
 
   constructor(
     private authService: AuthService,
-    private store: Store<{ shop: { listings: {}, cartTotal: number } }>
+    private store: Store<{ shop: fromApp.AppState }>
   ) { }
 
   ngOnInit(): void {

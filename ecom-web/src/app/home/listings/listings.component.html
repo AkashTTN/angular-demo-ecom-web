@@ -1,7 +1,10 @@
 <div class="listings">
   <h1>Listings</h1>
-  <app-listing
-    *ngFor="let listing of listings"
-    [data]="listing"
-  ></app-listing>
+  <!-- <ng-container *ngIf="!listingsError"> -->
+    <app-listing
+      *ngFor="let listing of listings"
+      [data]="listing"
+    ></app-listing>
+  <!-- </ng-container> -->
+  <p *ngIf="listingsError">Error fetching listings data.</p>
 </div>

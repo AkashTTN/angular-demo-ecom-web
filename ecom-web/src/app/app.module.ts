@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +31,7 @@ import { ListingDetailsComponent } from './home/listings/listing-details/listing
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { ShopReducer } from './store/reducers';
+import { ShopEffects } from './store/effects';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { ShopReducer } from './store/reducers';
   ],
   imports: [
     StoreModule.forRoot({ shop: ShopReducer }),
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot([ShopEffects]),
+    HttpClientModule,
     MatCardModule,
     MatListModule,
     MatBadgeModule,
